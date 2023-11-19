@@ -1,4 +1,4 @@
 <div class="container">
-  <app-input-form></app-input-form> 
+  <app-input-form (plotClicked)="handlePlotClick($event)"></app-input-form> 
   <app-chart [data]="data"></app-chart> 
 </div>

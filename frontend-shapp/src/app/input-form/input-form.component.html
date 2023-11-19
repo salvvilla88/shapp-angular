@@ -1,47 +1,52 @@
 <div class="container">
-    <div class="boxes">
-      <div class="box big-box">
-        <p>x = Probabilidad</p>
+  <div class="boxes" style="display: flex; flex-direction: row; justify-content: space-between;">
+
+    <div class="box big-box">
+      <p> x = {{ xInputLabel }}  <button (click)="editXLabel()"><i class="fas fa-pencil-alt"></i></button></p>
+      <div class="input-container" *ngIf="editingXLabel">
+        <input [(ngModel)]="newXLabel" type="text" placeholder="Nuevo valor">
+        <button (click)="saveXLabel(newXLabel)">Guardar</button>
       </div>
-      <div class="box small-box">
-        <p>Empleado 1:   </p>
+
+      <div class="input-container" *ngFor="let employee of employeeLabels; let i = index">
+        <p>
+          <span *ngIf="!editingEmployeeLabels[i]">{{ employee }}:</span>
+          <span *ngIf="editingEmployeeLabels[i]">
+            <input [(ngModel)]="employeeLabels[i]" type="text" placeholder="Nuevo nombre">
+            <button (click)="saveEmployeeLabel(i, employeeLabels[i])">Guardar</button>
+          </span>
+          <button *ngIf="!editingEmployeeLabels[i]" (click)="editEmployeeLabel(i)"><i class="fas fa-pencil-alt"></i></button>
+        </p>
         <div class="input-container">
-            <input id="x1" [(ngModel)]="x1" type="text" placeholder="">
+          <input [attr.id]="'x' + (i + 1)" [(ngModel)]="inputValues['x' + (i + 1)]" type="text" placeholder="Nuevo valor">
         </div>
       </div>
-      <div class="box small-box">
-        <p>Empleado 2:   </p>
-        <div class="input-container">
-            <input id="x2" [(ngModel)]="x2" type="text" placeholder="">
-        </div>
-      </div>
-      <div class="box small-box">
-        <p>Empleado 3:   </p>
-        <div class="input-container">
-            <input id="x3" [(ngModel)]="x3" type="text" placeholder="">
-        </div>
-      </div>
-      <div class="box big-box">
-        <p>y = Impacto</p>
-      </div>
-      <div class="box small-box">
-        <p>Impacto 1:   </p>
-        <div class="input-container">
-            <input id="y1" [(ngModel)]="y1" type="text" placeholder="">
-        </div>
-      </div>
-      <div class="box small-box">
-        <p>Impacto 2:   </p>
-        <div class="input-container">
-            <input id="y2" [(ngModel)]="y2" type="text" placeholder="">
-        </div>
-      </div>
-      <div class="box small-box">
-        <p>Impacto 3:   </p>
-        <div class="input-container">
-            <input id="y3" [(ngModel)]="y3" type="text" placeholder="">
-        </div>
-      </div>
-      <button>Plotear</button>
     </div>
+
+    <div class="box big-box">
+      <p> y = {{ yInputLabel }}  <button (click)="editYLabel()"><i class="fas fa-pencil-alt"></i></button></p>
+      <div class="input-container" *ngIf="editingYLabel">
+        <input [(ngModel)]="newYLabel" type="text" placeholder="Nuevo valor">
+        <button (click)="saveYLabel(newYLabel)">Guardar</button>
+      </div>
+
+      <div class="input-container" *ngFor="let impact of impactLabels; let i = index">
+        <p>
+          <span *ngIf="!editingImpactLabels[i]">{{ impact }}:</span>
+          <span *ngIf="editingImpactLabels[i]">
+            <input [(ngModel)]="impactLabels[i]" type="text" placeholder="Nuevo nombre">
+            <button (click)="saveImpactLabel(i, impactLabels[i])">Guardar</button>
+          </span>
+          <button *ngIf="!editingImpactLabels[i]" (click)="editImpactLabel(i)"><i class="fas fa-pencil-alt"></i></button>
+        </p>
+        <div class="input-container">
+          <input [attr.id]="'y' + (i + 1)" [(ngModel)]="inputValues['y' + (i + 1)]" type="text" placeholder="Nuevo valor">
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="center">
+    <button (click)="onPlotClick()">Plotear</button>
+  </div>
 </div>

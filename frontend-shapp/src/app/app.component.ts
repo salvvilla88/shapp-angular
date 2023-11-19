@@ -17,16 +17,14 @@ export class AppComponent implements AfterViewInit {
     y3: 4
   };
 
-  constructor() {}
-
   ngAfterViewInit() {
   }
 
-  plotChart() {
-    console.log('Input Data:', this.data);
+  handlePlotClick(data: any) {
+    console.log('Input Data:', data);
 
     if (this.chartComponent) {
-      this.chartComponent.data = this.data;
+      this.chartComponent.data = data;
       this.chartComponent.plotChart();
       console.log('PlotChart called');
     }
