@@ -17,8 +17,8 @@ export class InputFormComponent {
 
   xInputLabel: string = 'Probabilidad';
   yInputLabel: string = 'Impacto';
-  employeeLabels: string[] = ['Empleado 1', 'Empleado 2', 'Empleado 3'];
-  impactLabels: string[] = ['Impacto 1', 'Impacto 2', 'Impacto 3'];
+  employeeLabels: string[] = ['Valor 1', 'Valor 2', 'Valor 3'];
+  impactLabels: string[] = ['Valor 1', 'Valor 2', 'Valor 3'];
 
   editingXLabel: boolean = false;
   editingYLabel: boolean = false;
@@ -30,6 +30,11 @@ export class InputFormComponent {
   newImpactLabels: string[] = ['', '', ''];
 
   @Output() plotClicked = new EventEmitter<any>();
+  @Output() labelsChanged = new EventEmitter<{ xLabel: string, yLabel: string }>();
+
+  generateArray(length: number): number[] {
+    return Array.from({ length }, (_, index) => index);
+  }
 
   onPlotClick() {
     this.plotClicked.emit(this.inputValues);
@@ -43,6 +48,7 @@ export class InputFormComponent {
   saveXLabel(newLabel: string) {
     this.xInputLabel = newLabel;
     this.editingXLabel = false;
+    this.labelsChanged.emit({ xLabel: this.xInputLabel, yLabel: this.yInputLabel });
   }
 
   editYLabel() {
@@ -53,6 +59,7 @@ export class InputFormComponent {
   saveYLabel(newLabel: string) {
     this.yInputLabel = newLabel;
     this.editingYLabel = false;
+    this.labelsChanged.emit({ xLabel: this.xInputLabel, yLabel: this.yInputLabel });
   }
 
   editEmployeeLabel(index: number) {

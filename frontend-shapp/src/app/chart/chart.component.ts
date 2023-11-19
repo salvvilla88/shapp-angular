@@ -1,6 +1,11 @@
 import { Component, Input, AfterViewInit, ViewChild, ElementRef, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { Chart, ChartConfiguration, ScatterDataPoint } from 'chart.js/auto';
 
+interface ChartConfig {
+  xLabel: string;
+  yLabel: string;
+}
+
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
@@ -9,6 +14,10 @@ import { Chart, ChartConfiguration, ScatterDataPoint } from 'chart.js/auto';
 export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() data: any;
   @Input() lineColor: string = 'rgba(255, 0, 0, 1)';
+  @Input() config: ChartConfig = {
+    xLabel: 'Probabilidad',
+    yLabel: 'Impacto',
+  };
 
   @ViewChild('scatterplot') scatterplotCanvas!: ElementRef;
 
@@ -80,7 +89,7 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
               position: 'bottom',
               title: {
                 display: true,
-                text: 'Probabilidad (x)',
+                text: this.config.xLabel,
               },
               min: 0,
               max: maxX + 5,
@@ -93,7 +102,7 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
               position: 'left',
               title: {
                 display: true,
-                text: 'Impacto (y)',
+                text: this.config.yLabel,
               },
               min: 0,
               max: maxY + 5,
