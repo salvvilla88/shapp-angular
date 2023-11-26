@@ -40,7 +40,7 @@
           <button *ngIf="!editingImpactLabels[i]" (click)="editImpactLabel(i)"><i class="fas fa-pencil-alt"></i></button>
         </p>
         <div class="input-container">
-          <input [attr.id]="'y' + (i + 1)" [(ngModel)]="inputValues['y' + (i + 1)]" type="text" placeholder="Nuevo valor">
+          <input [attr.id]="'y' + (i + 1)" [(ngModel)]="inputValues['y' + (i + 1)]" type="text" placeholder="Valor {{ i + 1 }}">
         </div>
       </div>
     </div>
