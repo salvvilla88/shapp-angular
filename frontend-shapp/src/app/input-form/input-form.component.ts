@@ -1,4 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-input-form',
@@ -17,8 +18,8 @@ export class InputFormComponent {
 
   xInputLabel: string = 'Probabilidad';
   yInputLabel: string = 'Impacto';
-  employeeLabels: string[] = ['Empleado 1', 'Empleado 2', 'Empleado 3'];
-  impactLabels: string[] = ['Impacto 1', 'Impacto 2', 'Impacto 3'];
+  employeeLabels: string[] = ['Valor 1', 'Valor 2', 'Valor 3'];
+  impactLabels: string[] = ['Valor 1', 'Valor 2', 'Valor 3'];
 
   editingXLabel: boolean = false;
   editingYLabel: boolean = false;
@@ -30,6 +31,12 @@ export class InputFormComponent {
   newImpactLabels: string[] = ['', '', ''];
 
   @Output() plotClicked = new EventEmitter<any>();
+  @Output() labelsChanged = new EventEmitter<{ xLabel: string, yLabel: string }>();
+  @Output() dataLoaded = new EventEmitter<any>();
+
+  generateArray(length: number): number[] {
+    return Array.from({ length }, (_, index) => index);
+  }
 
   onPlotClick() {
     this.plotClicked.emit(this.inputValues);
@@ -43,6 +50,7 @@ export class InputFormComponent {
   saveXLabel(newLabel: string) {
     this.xInputLabel = newLabel;
     this.editingXLabel = false;
+    this.labelsChanged.emit({ xLabel: this.xInputLabel, yLabel: this.yInputLabel });
   }
 
   editYLabel() {
@@ -53,6 +61,7 @@ export class InputFormComponent {
   saveYLabel(newLabel: string) {
     this.yInputLabel = newLabel;
     this.editingYLabel = false;
+    this.labelsChanged.emit({ xLabel: this.xInputLabel, yLabel: this.yInputLabel });
   }
 
   editEmployeeLabel(index: number) {
@@ -73,5 +82,35 @@ export class InputFormComponent {
   saveImpactLabel(index: number, newLabel: string) {
     this.impactLabels[index] = newLabel;
     this.editingImpactLabels[index] = false;
+  }
+
+  constructor(private dataService: DataService) {}
+
+  onSaveClick() {
+    this.dataService.saveData(this.inputValues);
+  }
+
+  onLoadDataClick() {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '.json';
+    fileInput.addEventListener('change', (event) => {
+      const file = (event.target as HTMLInputElement).files?.[0];
+      if (file) {
+        this.readFile(file);
+      }
+    });
+    fileInput.click();
+  }
+
+  private readFile(file: File) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const fileContent = e.target?.result as string;
+      const loadedData = JSON.parse(fileContent);
+      this.dataLoaded.emit(loadedData);
+      this.inputValues = loadedData;      
+    };
+    reader.readAsText(file);
   }
 }

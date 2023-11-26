@@ -15,6 +15,21 @@ body, html {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    overflow-y: auto;
+    height: 300px;
+  }
+
+  .boxes::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  .boxes::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 10px;
+  }
+  
+  .boxes::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
   }
   
   .box {
@@ -39,4 +54,5 @@ body, html {
     align-items: center;
     margin-top: 20px;
   }
+
   

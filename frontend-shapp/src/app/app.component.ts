@@ -17,6 +17,9 @@ export class AppComponent implements AfterViewInit {
     y3: 4
   };
 
+  xInputLabel: string = 'Probabilidad';
+  yInputLabel: string = 'Impacto';
+
   ngAfterViewInit() {
   }
 
@@ -27,6 +30,27 @@ export class AppComponent implements AfterViewInit {
       this.chartComponent.data = data;
       this.chartComponent.plotChart();
       console.log('PlotChart called');
+    }
+  }
+
+  handleLabelsChanged(labels: { xLabel: string, yLabel: string }) {
+    if (this.chartComponent) {
+      this.xInputLabel = labels.xLabel;
+      this.yInputLabel = labels.yLabel;
+      this.chartComponent.config = {
+        xLabel: this.xInputLabel,
+        yLabel: this.yInputLabel,
+      };
+      this.chartComponent.plotChart();
+    }
+  }
+
+  handleDataLoaded(loadedData: any) {
+    this.data = loadedData;
+    if (this.chartComponent) {
+      this.chartComponent.data = loadedData;
+      this.chartComponent.plotChart();
+      console.log('PlotChart called after data loaded');
     }
   }
 }

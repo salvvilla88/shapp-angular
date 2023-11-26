@@ -1,4 +1,4 @@
 <div class="container">
-  <app-input-form (plotClicked)="handlePlotClick($event)"></app-input-form> 
-  <app-chart [data]="data"></app-chart> 
+  <app-input-form (plotClicked)="handlePlotClick($event)" (labelsChanged)="handleLabelsChanged($event)" (dataLoaded)="handleDataLoaded($event)"></app-input-form>
+  <app-chart [data]="data" [config]="{ xLabel: xInputLabel, yLabel: yInputLabel }" #chartComponent></app-chart>
 </div>

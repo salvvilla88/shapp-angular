@@ -1,16 +1,16 @@
 <div class="container">
-  <div class="boxes" style="display: flex; flex-direction: row; justify-content: space-between;">
+  <div class="boxes" style="display: flex; flex-direction: row; justify-content: space-between; height: 300px;">
 
-    <div class="box big-box">
+    <div class="box big-box" style="overflow-y: auto;">
       <p> x = {{ xInputLabel }}  <button (click)="editXLabel()"><i class="fas fa-pencil-alt"></i></button></p>
       <div class="input-container" *ngIf="editingXLabel">
         <input [(ngModel)]="newXLabel" type="text" placeholder="Nuevo valor">
         <button (click)="saveXLabel(newXLabel)">Guardar</button>
       </div>
 
-      <div class="input-container" *ngFor="let employee of employeeLabels; let i = index">
+      <div class="input-container" *ngFor="let i of generateArray(30)">
         <p>
-          <span *ngIf="!editingEmployeeLabels[i]">{{ employee }}:</span>
+          <span *ngIf="!editingEmployeeLabels[i]">{{ employeeLabels[i] }}:</span>
           <span *ngIf="editingEmployeeLabels[i]">
             <input [(ngModel)]="employeeLabels[i]" type="text" placeholder="Nuevo nombre">
             <button (click)="saveEmployeeLabel(i, employeeLabels[i])">Guardar</button>
@@ -18,21 +18,21 @@
           <button *ngIf="!editingEmployeeLabels[i]" (click)="editEmployeeLabel(i)"><i class="fas fa-pencil-alt"></i></button>
         </p>
         <div class="input-container">
-          <input [attr.id]="'x' + (i + 1)" [(ngModel)]="inputValues['x' + (i + 1)]" type="text" placeholder="Nuevo valor">
+          <input [attr.id]="'x' + (i + 1)" [(ngModel)]="inputValues['x' + (i + 1)]" type="text" placeholder="Valor {{ i + 1 }}">
         </div>
       </div>
     </div>
 
-    <div class="box big-box">
+    <div class="box big-box" style="overflow-y: auto;">
       <p> y = {{ yInputLabel }}  <button (click)="editYLabel()"><i class="fas fa-pencil-alt"></i></button></p>
       <div class="input-container" *ngIf="editingYLabel">
         <input [(ngModel)]="newYLabel" type="text" placeholder="Nuevo valor">
         <button (click)="saveYLabel(newYLabel)">Guardar</button>
       </div>
 
-      <div class="input-container" *ngFor="let impact of impactLabels; let i = index">
+      <div class="input-container" *ngFor="let i of generateArray(30)">
         <p>
-          <span *ngIf="!editingImpactLabels[i]">{{ impact }}:</span>
+          <span *ngIf="!editingImpactLabels[i]">{{ impactLabels[i] }}:</span>
           <span *ngIf="editingImpactLabels[i]">
             <input [(ngModel)]="impactLabels[i]" type="text" placeholder="Nuevo nombre">
             <button (click)="saveImpactLabel(i, impactLabels[i])">Guardar</button>
@@ -47,6 +47,8 @@
 
   </div>
   <div class="center">
-    <button (click)="onPlotClick()">Plotear</button>
+    <button style='margin-bottom:10px' (click)="onSaveClick()">Guardar Datos</button>
+    <button style='margin-bottom:10px' (click)="onLoadDataClick()">Cargar Datos</button>
+    <button style='margin-bottom:10px' (click)="onPlotClick()">Plotear</button>
   </div>
 </div>
