@@ -44,6 +44,32 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
   }
 
+  getXValues(data: any): number[] {
+    const xValues: number[] = [];
+  
+    for (let i = 1; i <= 30; i++) {
+      const xKey = `x${i}`;
+      if (data.hasOwnProperty(xKey)) {
+        xValues.push(data[xKey]);
+      }
+    }
+  
+    return xValues;
+  }
+  
+  getYValues(data: any): number[] {
+    const yValues: number[] = [];
+  
+    for (let i = 1; i <= 30; i++) {
+      const yKey = `y${i}`;
+      if (data.hasOwnProperty(yKey)) {
+        yValues.push(data[yKey]);
+      }
+    }
+  
+    return yValues;
+  }
+
   plotChart() {
     console.log('ChartComponent - Input Data:', this.data);
   
@@ -54,8 +80,11 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.chartInstance.destroy();
       }
 
-      const maxX = Math.max(this.data.x1, this.data.x2, this.data.x3);
-      const maxY = Math.max(this.data.y1, this.data.y2, this.data.y3);
+      const allXValues = this.getXValues(this.data);
+      const allYValues = this.getYValues(this.data);
+
+      const maxX = Math.max(...allXValues);
+      const maxY = Math.max(...allYValues);
   
       const chartConfig: ChartConfiguration<'scatter' | 'line'> = {
         type: 'scatter',
@@ -63,13 +92,13 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
           datasets: [
             {
               label: 'Scatterplot',
-              data: this.createDataPoints(),
+              data: this.createDataPoints(this.data),
               pointRadius: 8,
               pointBackgroundColor: 'rgba(75, 192, 192, 1)',
             },
             {
               label: 'Line',
-              data: this.createDataPoints(),
+              data: this.createDataPoints(this.data),
               type: 'line',
               borderColor: this.lineColor,
               borderWidth: 2,
@@ -121,11 +150,18 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
   
 
-  private createDataPoints(): ScatterDataPoint[] {
-    return [
-      { x: this.data.x1, y: this.data.y1 },
-      { x: this.data.x2, y: this.data.y2 },
-      { x: this.data.x3, y: this.data.y3 },
-    ];
+  private createDataPoints(data: any): ScatterDataPoint[] {
+    const dataPoints: ScatterDataPoint[] = [];
+  
+    for (let i = 1; i <= 30; i++) {
+      const xKey = `x${i}`;
+      const yKey = `y${i}`;
+  
+      if (data.hasOwnProperty(xKey) && data.hasOwnProperty(yKey)) {
+        dataPoints.push({ x: data[xKey], y: data[yKey] });
+      }
+    }
+  
+    return dataPoints;
   }
 }
