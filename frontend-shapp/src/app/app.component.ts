@@ -44,4 +44,13 @@ export class AppComponent implements AfterViewInit {
       this.chartComponent.plotChart();
     }
   }
+
+  handleDataLoaded(loadedData: any) {
+    this.data = loadedData;
+    if (this.chartComponent) {
+      this.chartComponent.data = loadedData;
+      this.chartComponent.plotChart();
+      console.log('PlotChart called after data loaded');
+    }
+  }
 }

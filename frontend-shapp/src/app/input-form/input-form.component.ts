@@ -1,4 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-input-form',
@@ -31,6 +32,7 @@ export class InputFormComponent {
 
   @Output() plotClicked = new EventEmitter<any>();
   @Output() labelsChanged = new EventEmitter<{ xLabel: string, yLabel: string }>();
+  @Output() dataLoaded = new EventEmitter<any>();
 
   generateArray(length: number): number[] {
     return Array.from({ length }, (_, index) => index);
@@ -80,5 +82,35 @@ export class InputFormComponent {
   saveImpactLabel(index: number, newLabel: string) {
     this.impactLabels[index] = newLabel;
     this.editingImpactLabels[index] = false;
+  }
+
+  constructor(private dataService: DataService) {}
+
+  onSaveClick() {
+    this.dataService.saveData(this.inputValues);
+  }
+
+  onLoadDataClick() {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '.json';
+    fileInput.addEventListener('change', (event) => {
+      const file = (event.target as HTMLInputElement).files?.[0];
+      if (file) {
+        this.readFile(file);
+      }
+    });
+    fileInput.click();
+  }
+
+  private readFile(file: File) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const fileContent = e.target?.result as string;
+      const loadedData = JSON.parse(fileContent);
+      this.dataLoaded.emit(loadedData);
+      this.inputValues = loadedData;      
+    };
+    reader.readAsText(file);
   }
 }
