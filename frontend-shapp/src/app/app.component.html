@@ -1,4 +1,7 @@
+<!-- Contenedor principal del componente -->
 <div class="container">
+  <!-- Componente de formulario de entrada con eventos vinculados -->
   <app-input-form (plotClicked)="handlePlotClick($event)" (labelsChanged)="handleLabelsChanged($event)" (dataLoaded)="handleDataLoaded($event)"></app-input-form>
+  <!-- Componente de gráfico con datos y configuración vinculados -->
   <app-chart [data]="data" [config]="{ xLabel: xInputLabel, yLabel: yInputLabel }" #chartComponent></app-chart>
 </div>

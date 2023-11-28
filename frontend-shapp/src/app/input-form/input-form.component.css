@@ -1,58 +1,63 @@
+/* Estilos para el cuerpo y la página HTML */
 body, html {
-    height: 100%;
-    margin: 0;
-  }
-  
-  .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-  }
-  
-  .boxes {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    overflow-y: auto;
-    height: 300px;
-  }
+  height: 100%;
+  margin: 0;
+}
 
-  .boxes::-webkit-scrollbar {
-    width: 12px;
-  }
+/* Estilos para el contenedor principal del formulario */
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
 
-  .boxes::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-    border-radius: 10px;
-  }
-  
-  .boxes::-webkit-scrollbar-track {
-    background-color: #f1f1f1;
-  }
-  
-  .box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 100px;
-    border: 1px solid #000;
-    padding: 10px;
-  }
-  
-  .input-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .center {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-  }
+/* Estilos para los contenedores de cajas para los ejes X e Y */
+.boxes {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  overflow-y: auto;
+  height: 300px;
+}
 
-  
+/* Estilos para la barra de desplazamiento en el contenedor de cajas */
+.boxes::-webkit-scrollbar {
+  width: 12px;
+}
+
+.boxes::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
+
+.boxes::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+/* Estilos para la caja que contiene los valores de X o Y */
+.box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 100px;
+  border: 1px solid #000;
+  padding: 10px;
+}
+
+/* Estilos para el contenedor de entrada dentro de la caja */
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Estilos para el contenedor central con botones */
+.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}

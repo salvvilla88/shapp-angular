@@ -1,44 +1,62 @@
+<!-- Contenedor principal del formulario de entrada -->
 <div class="container">
+  <!-- Contenedores de cajas para los ejes X e Y -->
   <div class="boxes" style="display: flex; flex-direction: row; justify-content: space-between; height: 300px;">
 
+    <!-- Caja para el eje X -->
     <div class="box big-box" style="overflow-y: auto;">
+      <!-- Etiqueta y botón para editar la etiqueta del eje X -->
       <p> x = {{ xInputLabel }}  <button (click)="editXLabel()"><i class="fas fa-pencil-alt"></i></button></p>
+      <!-- Contenedor de entrada para la edición de la etiqueta X -->
       <div class="input-container" *ngIf="editingXLabel">
         <input [(ngModel)]="newXLabel" type="text" placeholder="Nuevo valor">
         <button (click)="saveXLabel(newXLabel)">Guardar</button>
       </div>
 
+      <!-- Contenedor de entradas para los valores de X y nombres de empleados -->
       <div class="input-container" *ngFor="let i of generateArray(30)">
         <p>
+          <!-- Etiqueta para el nombre del empleado (editable) -->
           <span *ngIf="!editingEmployeeLabels[i]">{{ employeeLabels[i] }}:</span>
+          <!-- Entrada para la edición del nombre del empleado -->
           <span *ngIf="editingEmployeeLabels[i]">
             <input [(ngModel)]="employeeLabels[i]" type="text" placeholder="Nuevo nombre">
             <button (click)="saveEmployeeLabel(i, employeeLabels[i])">Guardar</button>
           </span>
+          <!-- Botón para editar el nombre del empleado -->
           <button *ngIf="!editingEmployeeLabels[i]" (click)="editEmployeeLabel(i)"><i class="fas fa-pencil-alt"></i></button>
         </p>
+        <!-- Contenedor de entrada para los valores de X -->
         <div class="input-container">
           <input [attr.id]="'x' + (i + 1)" [(ngModel)]="inputValues['x' + (i + 1)]" type="text" placeholder="Valor {{ i + 1 }}">
         </div>
       </div>
     </div>
 
+    <!-- Caja para el eje Y -->
     <div class="box big-box" style="overflow-y: auto;">
+      <!-- Etiqueta y botón para editar la etiqueta del eje Y -->
       <p> y = {{ yInputLabel }}  <button (click)="editYLabel()"><i class="fas fa-pencil-alt"></i></button></p>
+      <!-- Contenedor de entrada para la edición de la etiqueta Y -->
       <div class="input-container" *ngIf="editingYLabel">
         <input [(ngModel)]="newYLabel" type="text" placeholder="Nuevo valor">
         <button (click)="saveYLabel(newYLabel)">Guardar</button>
       </div>
 
+      <!-- Contenedor de entradas para los valores de Y e nombres de impacto -->
       <div class="input-container" *ngFor="let i of generateArray(30)">
         <p>
+          <!-- Etiqueta para el nombre del impacto (editable) -->
           <span *ngIf="!editingImpactLabels[i]">{{ impactLabels[i] }}:</span>
+          <!-- Entrada para la edición del nombre del impacto -->
           <span *ngIf="editingImpactLabels[i]">
             <input [(ngModel)]="impactLabels[i]" type="text" placeholder="Nuevo nombre">
             <button (click)="saveImpactLabel(i, impactLabels[i])">Guardar</button>
           </span>
+          <!-- Botón para editar el nombre del impacto -->
           <button *ngIf="!editingImpactLabels[i]" (click)="editImpactLabel(i)"><i class="fas fa-pencil-alt"></i></button>
         </p>
+        <!-- Contenedor de entrada para los valores de Y -->
         <div class="input-container">
           <input [attr.id]="'y' + (i + 1)" [(ngModel)]="inputValues['y' + (i + 1)]" type="text" placeholder="Valor {{ i + 1 }}">
         </div>
@@ -46,6 +64,7 @@
     </div>
 
   </div>
+  <!-- Contenedor central con botones para guardar datos, cargar datos y trazar el gráfico -->
   <div class="center">
     <button style='margin-bottom:10px' (click)="onSaveClick()">Guardar Datos</button>
     <button style='margin-bottom:10px' (click)="onLoadDataClick()">Cargar Datos</button>

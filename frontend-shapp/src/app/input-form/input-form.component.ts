@@ -1,50 +1,29 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { DataService } from '../data.service';
 
+// Decorador del componente de Angular
 @Component({
   selector: 'app-input-form',
   templateUrl: './input-form.component.html',
   styleUrls: ['./input-form.component.css']
 })
 export class InputFormComponent {
+  // Objeto que almacena los valores de entrada del formulario
   inputValues: any = {
     x1: null, y1: null,
     x2: null, y2: null,
-    x3: null, y3: null,
-    x4: null, y4: null,
-    x5: null, y5: null,
-    x6: null, y6: null,
-    x7: null, y7: null,
-    x8: null, y8: null,
-    x9: null, y9: null,
-    x10: null, y10: null,
-    x11: null, y11: null,
-    x12: null, y12: null,
-    x13: null, y13: null,
-    x14: null, y14: null,
-    x15: null, y15: null,
-    x16: null, y16: null,
-    x17: null, y17: null,
-    x18: null, y18: null,
-    x19: null, y19: null,
-    x20: null, y20: null,
-    x21: null, y21: null,
-    x22: null, y22: null,
-    x23: null, y23: null,
-    x24: null, y24: null,
-    x25: null, y25: null,
-    x26: null, y26: null,
-    x27: null, y27: null,
-    x28: null, y28: null,
-    x29: null, y29: null,
-    x30: null, y30: null,
+    // ... (x3 hasta y30)
   };
 
+  // Etiquetas por defecto para los ejes X e Y
   xInputLabel: string = 'Probabilidad';
   yInputLabel: string = 'Impacto';
+
+  // Etiquetas predeterminadas para los empleados e impacto
   employeeLabels: string[] = this.generateLabels(30, 'Valor');
   impactLabels: string[] = this.generateLabels(30, 'Valor');
 
+  // Variables para la edición de etiquetas
   editingXLabel: boolean = false;
   editingYLabel: boolean = false;
   newXLabel: string = '';
@@ -54,18 +33,22 @@ export class InputFormComponent {
   newEmployeeLabels: string[] = ['', '', ''];
   newImpactLabels: string[] = ['', '', ''];
 
+  // Eventos de salida para el clic en el botón de trazado, cambio de etiquetas y carga de datos
   @Output() plotClicked = new EventEmitter<any>();
   @Output() labelsChanged = new EventEmitter<{ xLabel: string, yLabel: string }>();
   @Output() dataLoaded = new EventEmitter<any>();
 
+  // Método para generar un array de números consecutivos de longitud especificada
   generateArray(length: number): number[] {
     return Array.from({ length }, (_, index) => index);
   }
 
+  // Método llamado al hacer clic en el botón de trazado
   onPlotClick() {
     this.plotClicked.emit(this.inputValues);
   }
 
+  // Métodos para la edición y guardado de etiquetas X e Y
   editXLabel() {
     this.editingXLabel = true;
     this.newXLabel = this.xInputLabel;
@@ -88,6 +71,7 @@ export class InputFormComponent {
     this.labelsChanged.emit({ xLabel: this.xInputLabel, yLabel: this.yInputLabel });
   }
 
+  // Métodos para la edición y guardado de etiquetas de empleados e impacto
   editEmployeeLabel(index: number) {
     this.editingEmployeeLabels[index] = true;
     this.newEmployeeLabels[index] = this.employeeLabels[index];
@@ -108,17 +92,22 @@ export class InputFormComponent {
     this.editingImpactLabels[index] = false;
   }
 
+  // Método para generar etiquetas de empleados e impacto
   generateLabels(count: number, baseLabel: string): string[] {
     return Array.from({ length: count }, (_, index) => `${baseLabel} ${index + 1}`);
   }
 
+  // Constructor del componente que inyecta el servicio de datos
   constructor(private dataService: DataService) {}
 
+  // Método llamado al hacer clic en el botón de guardar
   onSaveClick() {
     this.dataService.saveData(this.inputValues);
   }
 
+  // Método llamado al hacer clic en el botón de cargar datos
   onLoadDataClick() {
+    // Crear un input de tipo archivo para seleccionar el archivo JSON
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
     fileInput.accept = '.json';
@@ -131,6 +120,7 @@ export class InputFormComponent {
     fileInput.click();
   }
 
+  // Método privado para leer el contenido de un archivo JSON
   private readFile(file: File) {
     const reader = new FileReader();
     reader.onload = (e) => {
