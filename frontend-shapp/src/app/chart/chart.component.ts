@@ -22,65 +22,6 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
     yLabel: 'Impacto',
   };
 
-  // Referencia al elemento del gráfico en la vista
-  @ViewChild('scatterplot') scatterplotCanvas!: ElementRef;
-
-  // Instancia del gráfico
-  private chartInstance: Chart | null = null;
-
-  // Constructor del componente
-  constructor() {}
-
-  // Método llamado después de la inicialización de la vista
-  ngAfterViewInit() {
-    this.plotChart();
-  }
-
-  // Método llamado cuando hay cambios en las entradas del componente
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['data']) {
-      if (this.chartInstance) {
-        this.chartInstance.destroy();
-      }
-      this.plotChart();
-    }
-  }
-
-  // Método llamado antes de destruir el componente
-  ngOnDestroy() {
-    if (this.chartInstance) {
-      this.chartInstance.destroy();
-    }
-  }
-
-  // Método para obtener los valores de X a partir de los datos
-  getXValues(data: any): number[] {
-    const xValues: number[] = [];
-  
-    for (let i = 1; i <= 30; i++) {
-      const xKey = `x${i}`;
-      if (data.hasOwnProperty(xKey)) {
-        xValues.push(data[xKey]);
-      }
-    }
-  
-    return xValues;
-  }
-  
-  // Método para obtener los valores de Y a partir de los datos
-  getYValues(data: any): number[] {
-    const yValues: number[] = [];
-  
-    for (let i = 1; i <= 30; i++) {
-      const yKey = `y${i}`;
-      if (data.hasOwnProperty(yKey)) {
-        yValues.push(data[yKey]);
-      }
-    }
-  
-    return yValues;
-  }
-
   // Método para trazar el gráfico
   plotChart() {
     console.log('ChartComponent - Datos de entrada:', this.data);
@@ -162,7 +103,38 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
       console.error('Elemento de lienzo no disponible.');
     }
   }
-  
+
+  // Referencia al elemento del gráfico en la vista
+  @ViewChild('scatterplot') scatterplotCanvas!: ElementRef;
+
+  // Instancia del gráfico
+  private chartInstance: Chart | null = null;
+
+  // Constructor del componente
+  constructor() {}
+
+  // Método llamado después de la inicialización de la vista
+  ngAfterViewInit() {
+    this.plotChart();
+  }
+
+  // Método llamado cuando hay cambios en las entradas del componente
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['data']) {
+      if (this.chartInstance) {
+        this.chartInstance.destroy();
+      }
+      this.plotChart();
+    }
+  }
+
+  // Método llamado antes de destruir el componente
+  ngOnDestroy() {
+    if (this.chartInstance) {
+      this.chartInstance.destroy();
+    }
+  }
+
   // Método para crear puntos de datos a partir de los datos de entrada
   private createDataPoints(data: any): ScatterDataPoint[] {
     const dataPoints: ScatterDataPoint[] = [];
@@ -178,4 +150,33 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
   
     return dataPoints;
   }
+
+  // Método para obtener los valores de X a partir de los datos
+  getXValues(data: any): number[] {
+    const xValues: number[] = [];
+  
+    for (let i = 1; i <= 30; i++) {
+      const xKey = `x${i}`;
+      if (data.hasOwnProperty(xKey)) {
+        xValues.push(data[xKey]);
+      }
+    }
+  
+    return xValues;
+  }
+  
+  // Método para obtener los valores de Y a partir de los datos
+  getYValues(data: any): number[] {
+    const yValues: number[] = [];
+  
+    for (let i = 1; i <= 30; i++) {
+      const yKey = `y${i}`;
+      if (data.hasOwnProperty(yKey)) {
+        yValues.push(data[yKey]);
+      }
+    }
+  
+    return yValues;
+  }
+  
 }
